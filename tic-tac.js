@@ -29,7 +29,8 @@ function startGame() {
 }
 
 function pauseGame() {
-    playing = false;
+    playing = !playing;
+    document.getElementById('gameMessage').innerText = 'Game paused. Press Pause Game button to continue';
 }
 
 function reset() {
