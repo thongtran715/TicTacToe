@@ -1,0 +1,25 @@
+
+tr {
+    width: 100px;
+    height: 100px;
+}
+td {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+}
+.vertical{
+    border-left: solid 4px black;
+    border-right: solid 4px black;
+}
+table {
+    border-collapse: collapse;
+    position: absolute;
+    left: 50%;
+    margin-left: -155px;
+    top: 50px;
+}
+.horizontal{
+    border-top: solid 4px black;
+    border-bottom: solid 4px black;
+}
