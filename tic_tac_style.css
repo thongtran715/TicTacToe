@@ -18,6 +18,7 @@ table {
     left: 50%;
     margin-left: -155px;
     top: 50px;
+    text-align: center;
 }
 .horizontal{
     border-top: solid 4px black;
