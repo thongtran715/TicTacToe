@@ -24,3 +24,6 @@ table {
     border-top: solid 4px black;
     border-bottom: solid 4px black;
 }
+#gameMessage{
+    color: #ed6a5a;
+}

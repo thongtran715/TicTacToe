@@ -26,15 +26,14 @@
             <td class="cell" id="8"></td>
         </tr>
     </table>
-
-    <form>
-       <div>
-           <input type="button" value="Start Timer" onclick="start_timer()"/>
-           <input type="button" value="Pause Timer" onclick="stop_timer()"/>
-           <input type="button" value="Replay" onclick="start_game()"/>
-       </div>
-
-    </form>
-
+    <div>
+        <input type="button" value="Start Game" onclick="startGame()"/>
+        <input type="button" value="Pause Timer" onclick="stop_timer()"/>
+        <input type="button" value="Replay" onclick="reset()"/>
+        <p id="gameMessage">Please press Start Game to initialize the game.</p>
+        <p>Player 1 Wins: <span id="firstPlayerWins">0</span></p>
+        <p>Player 2 Wins: <span id="secondPlayerWins">0</span></p>
+        <input type="button" value="Reset Wins" onclick="resetWins()"/>
+    </div>
 </body>
 </html>
