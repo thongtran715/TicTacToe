@@ -27,3 +27,11 @@ table {
 #gameMessage{
     color: #ed6a5a;
 }
+#time {
+    visibility: hidden;
+}
+textarea{
+    position:absolute;
+    left: 800px;
+    top: 0px;
+}

@@ -8,6 +8,7 @@
     <script type="text/javascript" src="tic-tac.js"> </script>
     <script type="text/javascript"  src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+
 <body>
     <h1>Tic Tac Toe Game </h1>
     <table>
@@ -26,14 +27,36 @@
             <td class="cell" id="8"></td>
         </tr>
     </table>
+
     <div>
-        <input type="button" value="Start Game" onclick="startGame()"/>
+        <input type="button" id="startGame" value="Start Game" onclick="startGame()"/>
         <input type="button" value="Pause Timer" onclick="pauseGame()"/>
         <input type="button" value="Replay" onclick="reset()"/>
+        <input type="button" value="Change Name" onclick="changeName()"/>
         <p id="gameMessage">Please press Start Game to initialize the game.</p>
         <p>Player 1 Wins: <span id="firstPlayerWins">0</span></p>
         <p>Player 2 Wins: <span id="secondPlayerWins">0</span></p>
+        <label for="totalTime"> Total Time: </label>
+        <input type="text" id="totalTime"/>
+        <p id="time">0 seconds</p>
         <input type="button" value="Reset Wins" onclick="resetWins()"/>
+
+        <textarea rows="8" cols="60" disabled autofocus>
+            Rules of this game
+            1. Each player will only make one move at a time
+            2. Player whose obtain three consecutive symbols of "X" or "O" will win
+            3. Each player will only have 30 seconds to make a move. Otherwise, they will lose
+            4. If neither first nor second player obtain 2nd rule, game is tie.
+        </textarea>
+
+
     </div>
+
+
+
+
+
+
+
 </body>
 </html>
