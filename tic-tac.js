@@ -10,7 +10,7 @@ var playing = false;
 var first_player_name= "Player 1";
 var second_player_name = "Player 2";
 var gameMessage = 'Please press Start Game to initialize the game.';
-
+var is_pause = false;
 // Timer stuff
 var id;
 var totalTime;
@@ -29,7 +29,6 @@ function isWinner(playerCells) {
                 else
                 document.getElementById(mixedWins[i][index]).style.backgroundColor = "green";
             }
-
             isWinner = true;
         }
     }
@@ -42,36 +41,27 @@ function startGame() {
     secondPlayerCells = [];
     firstPlayerTurn = true;
     playing = true;
+    stopCountingTime();
+    counter = 0 ;
     timedCount();
-    startTimer(first_player_name);
 }
 
-function startTimer (playerName){
-        window.clearTimeout(id);
-        kickstartTimer(30, playerName);
-}
 
-function kickstartTimer(seconds, playerName) {
-    var timer = document.getElementById("time");
-    timer.style.visibility = "visible";
-
-    timer.textContent = playerName + " has " + seconds + " seconds";
-    if (seconds != 0){
-        --seconds;
-    }
-    id = setTimeout(function () {
-         kickstartTimer(seconds, playerName);
-    }, 1000);
-}
 
 function pauseGame() {
-    // Pause the timer
-    timer_is_on = !timer_is_on;
-    if (!timer_is_on)clearTimeout(totalTime);
-    else
-        startCount();
     playing = !playing;
-    document.getElementById('gameMessage').innerText = 'Game paused. Press Pause Game button to continue';
+    is_pause = !is_pause;
+    if (playing == false) {
+        document.getElementById('gameMessage').innerText = 'Game paused. Press Pause Game button to continue';
+        stopCountingTime();
+    }
+    else {
+        if (firstPlayerTurn)
+        document.getElementById('gameMessage').innerText = first_player_name + " 's turn";
+        else
+            document.getElementById('gameMessage').innerText = second_player_name + " 's turn";
+        startCount();
+    }
 }
 
 function reset() {
@@ -82,8 +72,7 @@ function reset() {
             cells[i].removeChild(cells[i].firstChild);
         }
     }
-    clearTimeout(totalTime) ;
-    timer_is_on = false;
+    stopCountingTime();
     counter = 0 ;
     startCount();
     firstPlayerTurn = true;
@@ -98,11 +87,15 @@ function changeName () {
     }).then((value1) => {
         if (value1 != null)
          first_player_name = value1;
+        else
+            first_player_name = "Player 1";
          swal("Please Enter Second Player Name", {
             content: "input",
         }).then((value) => {
             if (value != null)
             second_player_name = value;
+            else
+                second_player_name = "Player 1";
         });
     });
 }
@@ -120,14 +113,22 @@ function startCount() {
     }
 }
 
+function stopCountingTime () {
+        clearTimeout(totalTime) ;
+        timer_is_on = false;
+}
+
+
 
 
 function resetWins() {
     firstPlayerWins = 0;
     secondPlayerWins = 0;
+    tieCounter = 0 ;
     firstPlayerCells = [];
     secondPlayerCells = [];
     document.getElementById('firstPlayerWins').innerText = firstPlayerWins;
+    document.getElementById("numberOfGames").innerText = 0;
     document.getElementById('secondPlayerWins').innerText = secondPlayerWins;
 }
 
@@ -143,9 +144,6 @@ window.onload = function() {
                 var cellId = event.target.id;
                 if(!document.getElementById(cellId).childNodes.length){
                     if(firstPlayerTurn){
-
-                        startTimer(first_player_name);
-
                         var icon = document.createElement('i');
                         icon.style = "color: #5386e4";
                         icon.id = cellId;
@@ -162,17 +160,19 @@ window.onload = function() {
                             document.getElementById('firstPlayerWins').innerText = firstPlayerWins;
                             swal("Yeah", first_player_name + " won. Total time is " + counter + " seconds", "success");
                             clearTimeout(totalTime);
-                            document.getElementById('gameMessage').innerText = 'First Player won! Press Replay to reset game.';
-
+                            document.getElementById('gameMessage').innerText = first_player_name +  ' won! Press Replay to reset game.';
+                            document.getElementById("numberOfGames").innerText = (firstPlayerWins + secondPlayerWins + tieCounter);
                         }
                         else if ( full_box == 9){
                             ++tieCounter;
                             document.getElementById("tieCount").innerText = tieCounter;
+                            clearTimeout(totalTime);
+                            document.getElementById('gameMessage').innerText =  "Game Tie";
+                            document.getElementById("numberOfGames").innerText = (firstPlayerWins + secondPlayerWins + tieCounter);
                            swal("Hmm", "Game Tie") ;
                         }
 
                     } else {
-                        startTimer(second_player_name);
                         var icon = document.createElement('i');
                         icon.style = "color: #ed6a5a";
                         icon.id = cellId;
@@ -187,12 +187,16 @@ window.onload = function() {
                             document.getElementById('secondPlayerWins').innerText = secondPlayerWins;
                             swal("Yeah", second_player_name + " won. Total time is " + counter + " seconds", "success");
                             clearTimeout(totalTime);
-                            document.getElementById('gameMessage').innerText = 'Second Player won! Press Replay to reset game.';
+                            document.getElementById('gameMessage').innerText =  second_player_name + ' won! Press Replay to reset game.';
+                            document.getElementById("numberOfGames").innerText = (firstPlayerWins + secondPlayerWins + tieCounter);
                         }
                         else if ( full_box == 9){
                             ++tieCounter;
                             document.getElementById("tieCount").innerText = tieCounter;
-                           swal("Hmm", "Game Tie") ;
+                            clearTimeout(totalTime);
+                            document.getElementById('gameMessage').innerText =  "Game Tie";
+                            document.getElementById("numberOfGames").innerText = (firstPlayerWins + secondPlayerWins + tieCounter);
+                            swal("Hmm", "Game Tie") ;
                         }
 
                     }
@@ -203,7 +207,10 @@ window.onload = function() {
                 if (full_box == 0)
                 swal("Please Click Start Game button");
                 else
+                    if (is_pause == false)
                     swal("This game has ended. Please Click Replay button to start new game!")
+                    else
+                        swal("This game has paused. Please Click Replay button to resume game!")
             }
         });
     }
