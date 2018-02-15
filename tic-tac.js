@@ -2,6 +2,7 @@
 // Initialize the characters symbol for each player
 var firstPlayerWins = 0;
 var secondPlayerWins = 0;
+var tieCounter = 0 ;
 var firstPlayerTurn = true;
 var firstPlayerCells = [];
 var secondPlayerCells = [];
@@ -81,6 +82,10 @@ function reset() {
             cells[i].removeChild(cells[i].firstChild);
         }
     }
+    clearTimeout(totalTime) ;
+    timer_is_on = false;
+    counter = 0 ;
+    startCount();
     firstPlayerTurn = true;
     playing = true;
     firstPlayerCells = [];
@@ -161,6 +166,8 @@ window.onload = function() {
 
                         }
                         else if ( full_box == 9){
+                            ++tieCounter;
+                            document.getElementById("tieCount").innerText = tieCounter;
                            swal("Hmm", "Game Tie") ;
                         }
 
@@ -180,10 +187,11 @@ window.onload = function() {
                             document.getElementById('secondPlayerWins').innerText = secondPlayerWins;
                             swal("Yeah", second_player_name + " won. Total time is " + counter + " seconds", "success");
                             clearTimeout(totalTime);
-
                             document.getElementById('gameMessage').innerText = 'Second Player won! Press Replay to reset game.';
                         }
                         else if ( full_box == 9){
+                            ++tieCounter;
+                            document.getElementById("tieCount").innerText = tieCounter;
                            swal("Hmm", "Game Tie") ;
                         }
 
