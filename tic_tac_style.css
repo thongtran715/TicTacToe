@@ -1,4 +1,7 @@
 
+h1 {
+    text-align: center;
+}
 tr {
     width: 100px;
     height: 100px;
@@ -14,11 +17,8 @@ td {
 }
 table {
     border-collapse: collapse;
-    position: absolute;
-    left: 50%;
-    margin-left: -155px;
-    top: 50px;
     text-align: center;
+    margin: auto;
 }
 .horizontal{
     border-top: solid 4px black;
@@ -27,8 +27,14 @@ table {
 #gameMessage{
     color: #ed6a5a;
 }
-textarea{
-    position:absolute;
-    left: 800px;
-    top: 0px;
+textarea {
+    display: block;
+    margin: 20px auto;
+}
+.controls {
+    text-align: center;
+}
+.stats {
+    text-align: center;
+    margin: 20px;
 }
